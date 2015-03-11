@@ -85,7 +85,7 @@ sudo nano /boot/config.txt
 dtoverlay=rpi-cirrus-wm5102-overlay
 ```
 
-9) Dependancies between modules. There are certain modules those should be loaded before loading of other modules.
+9) Dependancies between modules: There are certain modules those should be loaded before loading of other modules.
 Connect to the Raspberry PI over SSH and do the following:
 ```
 sudo nano /etc/modprobe.d/raspi-blacklist.conf
@@ -99,9 +99,9 @@ softdep spi-bcm2708 pre: fixed
 ```
 
 10) Restart the Raspberry PI
-'''
+```
 sudo shutdown -r now
-'''
+```
 
 11) When the Raspberry PI reboots connect over SSH and run:
 ```
