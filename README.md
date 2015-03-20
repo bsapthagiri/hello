@@ -20,11 +20,17 @@ git clone https://github.com/raspberrypi/tools
 ```
 
 2) Set CCPREFIX environment variable:
+
+For 32 bit tools
 ```
-export CCPREFIX=/home/<user>/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
+export CCPREFIX=~/bin/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
 ${CCPREFIX}gcc -v
 ```
-Note : Change ```<user>``` to your username
+For 64 bit tools
+```
+export CCPREFIX=~/bin/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-
+${CCPREFIX}gcc -v
+```
 
 3) Download the Cirrus Raspberry PI kernel
 ```
@@ -33,6 +39,7 @@ mkdir code
 cd code
 git clone https://github.com/CirrusLogic/rpi-linux.git
 cd rpi-linux
+git checkout -b rpi-3.18.y origin/rpi-3.18.y
 ```
 
 
@@ -57,13 +64,13 @@ Note : Where ```<num-cores>``` is the number of processor cores dedicated to the
 
 6) Upload the new kernel, modules and dtb file to the Raspberry PI
 ```
-cd /home/<user>/raspberrypi/tools/mkimage
+cd ~/bin/raspberrypi/tools/mkimage
 ./mkknlimg  ~/code/rpi-linux/arch/arm/boot/zImage <kernel_img>
 scp <kernel_img> pi@<ip-addr>:/tmp
-cd ~/code/modules
+cd ~/code/rpi-linux/modules
 tar czf modules.tgz *
 scp modules.tgz pi@<ip-addr>:/tmp
-scp ~/code/arch/arm/boot/dts/rpi-cirrus-wm5102-overlay.dtb pi@<ip-addr>:/tmp
+scp ~/code/rpi-linux/arch/arm/boot/dts/rpi-cirrus-wm5102-overlay.dtb pi@<ip-addr>:/tmp
 ```
 Note : Where ```<kernel_img>``` is ```kernel.img``` for bcm2708, ```kernel7.img``` for bcm2709
 
